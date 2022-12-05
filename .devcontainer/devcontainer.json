@@ -1,0 +1,26 @@
+{
+    "extensions": [
+        "ms-dotnettools.csharp",
+        "github.copilot",
+        "rocketseat.theme-omni",
+        "pkief.material-icon-theme",
+        "aaron-bond.better-comments",
+        "kreativ-software.csharpextensions",
+        "ms-python.python"
+    ],
+
+    "settings": {
+        "editor.fontFamily": "'Jetbrains Mono'",
+        "editor.fontLigatures": true,
+        "workbench.iconTheme": "material-icon-theme",
+        "editor.fontSize": 18,
+        "window.zoomLevel": 1,
+        "workbench.colorTheme": "Omni"
+    }
+
+    //* Docs
+    //* https://dev.to/n3wt0n/make-it-perfect-how-to-customize-github-codespaces-2ma4
+
+    // "appPort": 3000,
+    // "forwardPorts": [1, 2, 3],
+}
