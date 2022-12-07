@@ -13,7 +13,7 @@
         "editor.fontFamily": "'Jetbrains Mono'",
         "editor.fontLigatures": true,
         "workbench.iconTheme": "material-icon-theme",
-        "editor.fontSize": 18,
+        "editor.fontSize": 16,
         "window.zoomLevel": 1,
         "workbench.colorTheme": "Omni"
     }

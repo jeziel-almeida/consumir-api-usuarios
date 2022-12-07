@@ -9,14 +9,26 @@ async function mostraUsuarios() {
 
     data.forEach(element => {
         let linha = document.createElement('tr')
+        //* Usuário
         let usuario = document.createElement('td')
         usuario.innerText = element.usuario
+        //* Data de criação
         let dataCriacao = document.createElement('td')
         let newDate = new Date(element.dataCriacao)
         let dataNova = dataFormatada(newDate)
         dataCriacao.innerText = dataNova
+        //* Delete
+        let deleteButton = document.createElement('button')
+        deleteButton.innerText = 'Deletar'
+        deleteButton.setAttribute('class', 'btn btn-danger')
+        deleteButton.setAttribute('onclick', `deletarUsuario(${element.id})`)
+        let deleteTd = document.createElement('td')
+        deleteTd.appendChild(deleteButton)
+
         linha.appendChild(usuario)
         linha.appendChild(dataCriacao)
+        linha.appendChild(deleteTd)
+
         tabelaCorpo.appendChild(linha)
     });
 }
@@ -73,6 +85,19 @@ function dataFormatada(dataISO) {
 function limparCampos(usuario, senha) {
     usuario.value = ''
     senha.value = ''
+}
+
+async function deletarUsuario(id) {
+    let url = `http://jezielalmeida-001-site1.btempurl.com/api/login/${id}`
+    const res = await fetch(url, {
+        method: "DELETE"
+    })
+
+    if(res) {
+        alert("Usuário deletado com sucesso!")
+    } else {
+        alert("Erro ao deletar usuário!")
+    }
 }
 
 mostraUsuarios()
