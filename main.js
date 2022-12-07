@@ -20,16 +20,26 @@ async function mostraUsuarios() {
         //* Delete
         let deleteButton = document.createElement('button')
         deleteButton.innerText = 'Deletar'
-        deleteButton.setAttribute('class', 'btn btn-danger')
+        deleteButton.setAttribute('class', 'btn btn-danger btn-sm')
         deleteButton.setAttribute('onclick', `deletarUsuario(${element.id})`)
         let deleteTd = document.createElement('td')
         deleteTd.appendChild(deleteButton)
+        //* Update
+        let updateButton = document.createElement('button')
+        updateButton.innerText = 'Atualizar'
+        updateButton.setAttribute('class', 'btn btn-warning btn-sm')
+        updateButton.setAttribute('onclick', `atualizarUsuario(${element.id}, '${element.usuario}')`)
+        let updateTd = document.createElement('td')
+        updateTd.appendChild(updateButton)
 
         linha.appendChild(usuario)
         linha.appendChild(dataCriacao)
         linha.appendChild(deleteTd)
+        linha.appendChild(updateTd)
 
         tabelaCorpo.appendChild(linha)
+
+    
     });
 }
 
@@ -98,6 +108,65 @@ async function deletarUsuario(id) {
     } else {
         alert("Erro ao deletar usuário!")
     }
+
+    mostraUsuarios()
+}
+
+function atualizarUsuario(id, usuario) {
+    const formAtualizar = document.getElementById("atualizar-form")
+    formAtualizar.setAttribute('class', 'd-block vh-100')
+    
+    const usuarioNovo = document.getElementById("usuario-atualizar")
+    usuarioNovo.value = usuario
+
+    const idUsuario = document.getElementById("id-usuario")
+    idUsuario.value = id
+
+    window.location.href = "#atualizar-form"
+
+    const btnCancelar = document.getElementById("btn-cancelar")
+    btnCancelar.addEventListener('click', () => {
+        window.location.href = "#cadastrar-form"  
+    })
+}
+
+async function updateUsuario() {
+    event.preventDefault();
+
+    const idUsuario = document.getElementById("id-usuario")
+    let url = `http://jezielalmeida-001-site1.btempurl.com/api/login/${idUsuario.value}`
+
+    let dataCriacao = dataAtual()
+    const senhaNova = document.getElementById("senha-atualizar")
+    const usuarioNovo = document.getElementById("usuario-atualizar")
+
+    const res = await fetch(url, {
+        method: "PUT",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            "usuario": usuarioNovo.value,
+            "senha": senhaNova.value,
+            "dataCriacao": dataCriacao
+        })
+    })
+
+    console.log(res)
+
+    if(res) {
+        alert("Usuário atualizado com sucesso!")
+    } else {
+        alert("Erro ao atualizar usuário!")
+    }
+
+    limparCampos(usuarioNovo, senhaNova)
+
+    const formAtualizar = document.getElementById("atualizar-form")
+    formAtualizar.setAttribute('class', 'd-none')
+
+
+    mostraUsuarios()
 }
 
 mostraUsuarios()
