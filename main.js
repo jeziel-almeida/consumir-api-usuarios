@@ -28,7 +28,7 @@ async function mostraUsuarios() {
         let updateButton = document.createElement('button')
         updateButton.innerText = 'Atualizar'
         updateButton.setAttribute('class', 'btn btn-warning btn-sm')
-        updateButton.setAttribute('onclick', `atualizarUsuario(${element.id}, '${element.usuario}')`)
+        updateButton.setAttribute('onclick', `atualizarUsuario(${element.id}, '${element.usuario}', '${element.dataCriacao}')`)
         let updateTd = document.createElement('td')
         updateTd.appendChild(updateButton)
 
@@ -112,7 +112,7 @@ async function deletarUsuario(id) {
     mostraUsuarios()
 }
 
-function atualizarUsuario(id, usuario) {
+function atualizarUsuario(id, usuario, dataCriacao) {
     const formAtualizar = document.getElementById("atualizar-form")
     formAtualizar.setAttribute('class', 'd-block vh-100')
     
@@ -121,12 +121,15 @@ function atualizarUsuario(id, usuario) {
 
     const idUsuario = document.getElementById("id-usuario")
     idUsuario.value = id
+    
+    const dataUsuario = document.getElementById("data-usuario")
+    dataUsuario.value = dataCriacao
 
     window.location.href = "#atualizar-form"
 
     const btnCancelar = document.getElementById("btn-cancelar")
     btnCancelar.addEventListener('click', () => {
-        window.location.href = "#cadastrar-form"  
+        formAtualizar.setAttribute('class', 'd-none')
     })
 }
 
@@ -136,7 +139,7 @@ async function updateUsuario() {
     const idUsuario = document.getElementById("id-usuario")
     let url = `http://jezielalmeida-001-site1.btempurl.com/api/login/${idUsuario.value}`
 
-    let dataCriacao = dataAtual()
+    const dataCriacao = document.getElementById("data-usuario")
     const senhaNova = document.getElementById("senha-atualizar")
     const usuarioNovo = document.getElementById("usuario-atualizar")
 
@@ -148,7 +151,7 @@ async function updateUsuario() {
         body: JSON.stringify({
             "usuario": usuarioNovo.value,
             "senha": senhaNova.value,
-            "dataCriacao": dataCriacao
+            "dataCriacao": dataCriacao.value
         })
     })
 
